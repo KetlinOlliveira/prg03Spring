@@ -2,6 +2,7 @@ br\com\ifba\curso\dao\br\com\ifba\view\TelaCadastro.class
 br\com\ifba\curso\dao\br\com\ifba\view\TelaCadastro$3.class
 br\com\ifba\curso\dao\br\com\ifba\view\TelaPrincipal$2.class
 br\com\ifba\curso\dao\br\com\ifba\view\TelaPrincipal$1.class
+br\com\ifba\curso\controller\CursoIController.class
 br\com\ifba\service\CursoService.class
 com\mycompany\atividade13\Atividade13.class
 br\com\ifba\curso\dao\CursoDao.class
@@ -18,3 +19,4 @@ br\com\ifba\curso\dao\br\com\ifba\view\TelaPrincipal$4.class
 br\com\ifba\curso\dao\br\com\ifba\view\TelaPrincipal$6.class
 br\com\ifba\infrastructure\entity\PersistenceEntity.class
 br\com\ifba\curso\dao\br\com\ifba\view\TelaCadastro$2.class
+br\com\ifba\curso\controller\CursoController.class

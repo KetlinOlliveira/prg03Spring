@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package br.com.ifba.curso.dao.br.com.ifba.view;
+import br.com.ifba.curso.controller.CursoController;
+import br.com.ifba.curso.controller.CursoIController;
 import br.com.ifba.curso.dao.CursoDao;
 import br.com.ifba.curso.dao.CursoIDao;
 import javax.swing.JOptionPane;
@@ -20,7 +22,7 @@ import java.util.List;
 public class TelaPrincipal extends javax.swing.JFrame { // Define a janela principal (a primeira tela que o usuário vê).
     
    
-    private final CursoIService cursoService = new CursoService(); // Instância do Service (Camada de Regra de Negócio) para interagir com o banco.
+    private final CursoIController cursoIController = new CursoController(); // Instância do Service (Camada de Regra de Negócio) para interagir com o banco.
     private final CursoDao cursoDao = new CursoDao(); // Instância do DAO (Camada de Acesso ao Banco).
     
     // Inicializa a tela.
@@ -33,7 +35,7 @@ public class TelaPrincipal extends javax.swing.JFrame { // Define a janela princ
     public void carregarCursos(){
         try{
             //Pede ao Service para buscar todos os cursos no banco de dados.
-            List<Curso> cursos = cursoService.findAll(); 
+            List<Curso> cursos = cursoIController.findAll(); 
             // Objeto usado para construir o texto que será exibido de forma eficiente.
             StringBuilder sb = new StringBuilder(); 
             
@@ -201,7 +203,7 @@ public class TelaPrincipal extends javax.swing.JFrame { // Define a janela princ
 
         try{ 
             Long id = Long.valueOf(txtID.getText());//Pega o ID informado na caixa
-            Curso curso = cursoService.findById(id); //faz a buscar no ID usando o cursoService
+            Curso curso = cursoIController.findById(id); //faz a buscar no ID usando o cursoService
             
             if(curso != null){//Imprime as informações do ID se encontrar
                 String resultado = "CURSO ENCONTRADO:\n" + "ID:" + curso.getId()+

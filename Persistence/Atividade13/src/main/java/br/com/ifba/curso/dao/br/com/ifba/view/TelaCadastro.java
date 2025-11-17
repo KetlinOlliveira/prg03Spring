@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package br.com.ifba.curso.dao.br.com.ifba.view;
+import br.com.ifba.curso.controller.CursoController;
+import br.com.ifba.curso.controller.CursoIController;
 import br.com.ifba.service.CursoIService;
 import br.com.ifba.service.CursoService;
 import javax.swing.JOptionPane;
@@ -15,7 +17,7 @@ import br.com.ifba.curso.entity.Curso;
 public class TelaCadastro extends javax.swing.JFrame { // Define a janela de cadastro/edição. É uma tela Swing.
 
     private Curso cursoParaEditar; // Variável que armazena o objeto 'Curso' apenas se a tela estiver no modo de EDIÇÃO.
-    private final CursoIService cursoService = new CursoService(); // Instância do Service (Camada de Negócio) para salvar/atualizar o curso no banco.
+    private final CursoIController cursoIController = new CursoController(); // Instância do Service (Camada de Negócio) para salvar/atualizar o curso no banco.
     private final TelaPrincipal telaPrincipal; // Referência à TelaPrincipal, usada para recarregar a lista de cursos após o cadastro/edição.
     
     // CONSTRUTOR 1: Modo NOVO CADASTRO
@@ -189,11 +191,11 @@ public class TelaCadastro extends javax.swing.JFrame { // Define a janela de cad
             // 2. Chamada ao Service (Save ou Update)
             if (cursoParaEditar == null) {
                 // Chamada para NOVO cadastro (método save)
-                cursoService.save(curso); 
+                cursoIController.save(curso); 
                 JOptionPane.showMessageDialog(this, "Curso cadastrado com sucesso!");
             } else {
                 // Chamada para EDIÇÃO (método update)
-                cursoService.update(curso); 
+                cursoIController.update(curso); 
                 JOptionPane.showMessageDialog(this, "Curso ID " + curso.getId() + " editado com sucesso!");
             }
             
