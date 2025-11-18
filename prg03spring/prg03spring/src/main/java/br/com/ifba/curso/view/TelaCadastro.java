@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package br.com.ifba.curso.dao.br.com.ifba.view;
+package br.com.ifba.curso.view;
 import br.com.ifba.curso.controller.CursoController;
 import br.com.ifba.curso.controller.CursoIController;
-import br.com.ifba.service.CursoIService;
-import br.com.ifba.service.CursoService;
+import br.com.ifba.curso.service.CursoIService;
+import br.com.ifba.curso.service.CursoService;
 import javax.swing.JOptionPane;
 import br.com.ifba.curso.entity.Curso;
 
@@ -17,12 +17,14 @@ import br.com.ifba.curso.entity.Curso;
 public class TelaCadastro extends javax.swing.JFrame { // Define a janela de cadastro/edição. É uma tela Swing.
 
     private Curso cursoParaEditar; // Variável que armazena o objeto 'Curso' apenas se a tela estiver no modo de EDIÇÃO.
-    private final CursoIController cursoIController = new CursoController(); // Instância do Service (Camada de Negócio) para salvar/atualizar o curso no banco.
+    private final CursoIController cursoIController;
     private final TelaPrincipal telaPrincipal; // Referência à TelaPrincipal, usada para recarregar a lista de cursos após o cadastro/edição.
     
     // CONSTRUTOR 1: Modo NOVO CADASTRO
-    public TelaCadastro(TelaPrincipal tp){
+    public TelaCadastro(TelaPrincipal tp, CursoIController controller){
+       
         this.telaPrincipal = tp; // Recebe e guarda a referência da tela principal.
+        this.cursoIController = controller;//inicializaçao do controller
         initComponents(); // Inicializa os componentes visuais (campos de texto, labels, botões).
         this.jLabel6.setText("Cadastrar Curso"); // Define o título da janela.
         
@@ -31,9 +33,10 @@ public class TelaCadastro extends javax.swing.JFrame { // Define a janela de cad
     }
     
     // CONSTRUTOR 2: Modo EDIÇÃO
-    public TelaCadastro(TelaPrincipal tp, Curso curso){ // Recebe a TelaPrincipal (para atualização) e o objeto 'Curso' a ser editado.
+    public TelaCadastro(TelaPrincipal tp, Curso curso, CursoIController controller){ // Recebe a TelaPrincipal (para atualização) e o objeto 'Curso' a ser editado.
         this.telaPrincipal = tp; // Guarda a referência da tela principal.
         this.cursoParaEditar = curso; // Armazena o curso existente (contém o ID para o update).
+         this.cursoIController = controller;
         initComponents(); // Inicializa os componentes visuais.
         
         // Define o título da janela, mostrando o ID do curso em edição.

@@ -2,16 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package br.com.ifba.curso.dao.br.com.ifba.view;
+package br.com.ifba.curso.view;
 import br.com.ifba.curso.controller.CursoController;
 import br.com.ifba.curso.controller.CursoIController;
-import br.com.ifba.curso.dao.CursoDao;
-import br.com.ifba.curso.dao.CursoIDao;
 import javax.swing.JOptionPane;
 import br.com.ifba.curso.entity.Curso;
-import br.com.ifba.service.CursoIService;
-import br.com.ifba.service.CursoService;
 import java.util.List;
+import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 
@@ -19,15 +17,19 @@ import java.util.List;
  *
  * @author ketli
  */
+@Component
 public class TelaPrincipal extends javax.swing.JFrame { // Define a janela principal (a primeira tela que o usuário vê).
     
-   
-    private final CursoIController cursoIController = new CursoController(); // Instância do Service (Camada de Regra de Negócio) para interagir com o banco.
-    private final CursoDao cursoDao = new CursoDao(); // Instância do DAO (Camada de Acesso ao Banco).
+   @Autowired
+    private final CursoIController cursoIController;
+     
     
     // Inicializa a tela.
-    public TelaPrincipal() {
+    public TelaPrincipal(CursoIController controller) {
+        this.cursoIController = controller;
         initComponents(); // Monta os componentes visuais (botões, campo de texto, área de listagem, etc.).
+        setLocationRelativeTo(null);
+        
         carregarCursos(); // Chama a função para buscar e listar os cursos assim que a tela é aberta.
     }
     
@@ -94,9 +96,14 @@ public class TelaPrincipal extends javax.swing.JFrame { // Define a janela princ
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Cursos Adicionados:");
 
+        txtListar.setBackground(new java.awt.Color(255, 255, 255));
         txtListar.setColumns(20);
+        txtListar.setForeground(new java.awt.Color(0, 0, 0));
         txtListar.setRows(5);
+        txtListar.setCaretColor(new java.awt.Color(0, 0, 0));
+        txtListar.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtListar.setEnabled(false);
+        txtListar.setSelectionColor(new java.awt.Color(0, 0, 0));
         jScrollPane1.setViewportView(txtListar);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -222,10 +229,11 @@ public class TelaPrincipal extends javax.swing.JFrame { // Define a janela princ
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // Cria a nova janela de cadastro, passando 'this' (a referência da TelaPrincipal).
         // Isso permite que a TelaCadastro saiba qual tela principal deve ser atualizada.
-        TelaCadastro telaCadastro = new TelaCadastro(this);
+        TelaCadastro tela = new TelaCadastro(this, cursoIController); 
+        tela.setVisible(true);
         
         // Adiciona um 'ouvinte' (Listener) para monitorar eventos na janela de cadastro.
-        telaCadastro.addWindowListener(new java.awt.event.WindowAdapter() {
+        tela.addWindowListener(new java.awt.event.WindowAdapter() {
             
             @Override//Este método é chamado automaticamente ASSIM QUE a janela de cadastro é fechada (Dispose).
             public void windowClosed(java.awt.event.WindowEvent windowEvent){
@@ -235,7 +243,7 @@ public class TelaPrincipal extends javax.swing.JFrame { // Define a janela princ
             }
         });
         
-        telaCadastro.setVisible(true);
+        
         
 
         // TODO add your handling code here:
@@ -245,7 +253,7 @@ public class TelaPrincipal extends javax.swing.JFrame { // Define a janela princ
         try{//Ação para excluir um cadastro
             Long id = Long.parseLong(txtID.getText().trim());//Recebe ID
                 
-            Curso cursoParaExcluir = cursoDao.findById(id); //faz a busca pelo ID e transfere para cursoParaExcluir
+            Curso cursoParaExcluir = cursoIController.findById(id); //faz a busca pelo ID e transfere para cursoParaExcluir
                 
             
                 if(cursoParaExcluir != null){
@@ -253,7 +261,7 @@ public class TelaPrincipal extends javax.swing.JFrame { // Define a janela princ
                         "Confirmar Exclusão", JOptionPane.YES_NO_OPTION);//faz a confirmação com o usuario
                     
                 if(confirmacao == JOptionPane.YES_OPTION){
-                    cursoDao.delete(cursoParaExcluir);
+                    cursoIController.delete(cursoParaExcluir);
                     JOptionPane.showMessageDialog(this, "Curso com ID " + id + "Excluido com sucesso!");
                     carregarCursos();
                     txtID.setText("");                 
@@ -277,7 +285,7 @@ public class TelaPrincipal extends javax.swing.JFrame { // Define a janela princ
         try{
             Long id = Long.parseLong(txtID.getText().trim());
             
-            Curso curso = cursoDao.findById(id);
+            Curso curso = cursoIController.findById(id);
             
             if(curso !=null){
                String detalhes = String.format("ID: %d\nNome: %s\nQtd: %d\nDescrição: %s\nFornecedor: %s",
@@ -327,7 +335,7 @@ public class TelaPrincipal extends javax.swing.JFrame { // Define a janela princ
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaPrincipal().setVisible(true);
+                
             }
         });
     }

@@ -5,18 +5,23 @@
 package br.com.ifba.curso.controller;
 
 import br.com.ifba.curso.entity.Curso;
-import br.com.ifba.service.CursoIService;
-import br.com.ifba.service.CursoService;
+import br.com.ifba.curso.service.CursoIService;
+import br.com.ifba.curso.service.CursoService;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+//import org.springframework.web.bind.annotation.RestController;
+//import org.springframework.web.bind.annotation.RequestMapping;
 
-/**
- *
- * @author ketli
- */
+@Controller
 public class CursoController implements CursoIController{
+   
+    private final CursoIService cursoIService;
     
-    private final CursoIService cursoIService = new CursoService();
-    
+    @Autowired
+    public CursoController(CursoIService cursoService) {
+        this.cursoIService = cursoService;
+    }
     @Override
    public Curso save(Curso curso){
        return cursoIService.save(curso);
