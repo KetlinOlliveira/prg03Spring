@@ -4,11 +4,12 @@
  */
 package br.com.ifba.curso.service;
 import br.com.ifba.curso.entity.Curso;
-import br.com.ifba.curso.dao.CursoIDao;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import br.com.ifba.curso.repository.CursoRepository;
 
 /**
  *
@@ -17,10 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CursoService implements CursoIService{
     @Autowired
-    private  CursoIDao cursoDao;
+    private  CursoRepository cursoRepository;
     
-    public CursoService(CursoIDao cursoIDao) {
-        this.cursoDao = cursoIDao;
+    public CursoService(CursoRepository cursoRepository) {
+        this.cursoRepository = cursoRepository;
     }
     
    @Override
@@ -32,7 +33,7 @@ public class CursoService implements CursoIService{
        }else if(curso.getId() != null){
            throw new RuntimeException("Curso já existente no banco de dados!");
        }else{
-           return cursoDao.save(curso);
+           return cursoRepository.save(curso);
        }
    }
    @Override
@@ -41,7 +42,7 @@ public class CursoService implements CursoIService{
        if(curso == null){
            throw new RuntimeException("Dados do curso não preenchidos!");
        }
-       return cursoDao.save(curso);
+       return cursoRepository.save(curso);
              
    }
    
@@ -50,17 +51,17 @@ public class CursoService implements CursoIService{
        if(curso == null){
              throw new RuntimeException("Curso já excluido ou não encontrado!");
        }
-       cursoDao.delete(curso);
+       cursoRepository.delete(curso);
    }
    
    @Override
    public List<Curso> findAll(){
-       return cursoDao.findAll();
+       return cursoRepository.findAll();
    }
    
    @Override
    public Curso findById(Long id){
-      return cursoDao.findById(id).orElseThrow(() -> 
+      return cursoRepository.findById(id).orElseThrow(() -> 
            new RuntimeException("Curso com ID " + id + " não encontrado."));
 }
 }
