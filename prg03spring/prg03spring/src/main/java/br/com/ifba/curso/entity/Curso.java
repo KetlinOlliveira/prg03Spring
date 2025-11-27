@@ -9,8 +9,10 @@ import br.com.ifba.infrastructure.entity.PersistenceEntity;// Importa a classe b
 import jakarta.persistence.Entity; // Anotação obrigatória que marca esta classe como uma entidade JPA (mapeada para uma tabela).
 import jakarta.persistence.Table; // Anotação para mapear a classe a uma tabela específica no banco.
 import jakarta.persistence.Column; // Anotação para mapear um campo Java a uma coluna específica da tabela.
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "Cursos") // Informa ao JPA que esta entidade corresponde à tabela "Cursos" no banco.
 public class Curso extends PersistenceEntity{ // Herda o ID, getters/setters de ID, equals e hashCode da classe mãe.
     
@@ -29,40 +31,5 @@ public class Curso extends PersistenceEntity{ // Herda o ID, getters/setters de 
 
     public Curso() {// Construtor vazio (obrigatório para o JPA/Hibernate).
     }
-
-   //getters e setters
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public String getFornecedor() {
-        return fornecedor;
-    }
-
-    public void setFornecedor(String fornecedor) {
-        this.fornecedor = fornecedor;
-    }
-   
-    
-    
+  
 }
